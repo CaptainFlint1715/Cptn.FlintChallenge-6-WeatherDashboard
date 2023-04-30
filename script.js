@@ -1,6 +1,5 @@
 'http://api.openweathermap.org/data/2.5/weather?q=ATLANTA&appid=a6f604b70bbc96fe15f33a697d2d32cf'
 
-localStorage.clear()
 
 var city = ''
 var searchCity = $('#city-input')
@@ -12,11 +11,15 @@ var currentWind = $('#wind')
 var currentHumid = $('#humidity')
 var cityList = $('.list-group')
 
-var savedCities = []
+window.onbeforeunload = function() {
+    localStorage.clear()
+}
+
+var savedCities = JSON.parse(localStorage.getItem('cities')) || []
 
 function find(c) {
     for (var i = 0; i < savedCities.length; i++) {
-        if (c.toUpperCase() === savedCities[i]) {
+        if (c.toUpperCase() === savedCities[i].toUpperCase()) {
             return -1
         }
     }
@@ -34,31 +37,32 @@ function checkBlank(e) {
 }
 
 function displayCity(city) {
-    currentCity.text(city + ' (' + dayjs().format('M/D/YYYY') + ')')
+    currentCity.text((city.toUpperCase()) + ' (' + dayjs().format('M/D/YYYY') + ')')
 
-    var queryUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + weatherAPI
+    var queryUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + weatherAPI + '&humidity'
 
     fetch(queryUrl).then(function (response) {
         return response.json()
     })
         .then(function (data) {
             console.log('weather data', data)
-            currentTemp.text((((((data.main.temp) - 273.15) * 9/5) + 32).toFixed(2)) + 'ºF')
-            currentHumid.text
-            currentWind.text
+            currentTemp.text((((((data.main.temp) - 273.15) * 9 / 5) + 32).toFixed(2)) + 'ºF')
+            currentHumid.text((data.main.humidity) + '%')
+            currentWind.text((data.wind.speed) + 'mph')
 
-            var newCityBtn = document.createElement('button')
-            newCityBtn.textContent = city
-            newCityBtn.setAttribute('style', 'margin-top: 8px')
-            newCityBtn.setAttribute('style', 'margin-bottom: 8px')
-            cityList.append(newCityBtn)
+            if (find(city) > 0) {
+                var newCityBtn = document.createElement('button')
+                newCityBtn.textContent = city
+                newCityBtn.setAttribute('style', 'margin-top: 8px')
+                newCityBtn.setAttribute('style', 'margin-bottom: 8px')
+                cityList.append(newCityBtn)
 
-            var lat = data.coord.lat
-            var lon = data.coord.lon
-            var latLon = 'lat=' + lat.toString() + '&lon=' + lon.toString()
-            localStorage.setItem(city, latLon)
-
-            
+                var lat = data.coord.lat
+                var lon = data.coord.lon
+                var latLon = 'lat=' + lat.toString() + '&lon=' + lon.toString()
+                savedCities.push(city)
+                localStorage.setItem('cities', JSON.stringify(savedCities))
+            }
 
 
 
