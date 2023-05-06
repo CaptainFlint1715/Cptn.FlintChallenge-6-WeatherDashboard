@@ -23,4 +23,4 @@ Please refer to the LICENSE in the repo.
 
 ## Images
 
-C:\Users\chans\bootcamp\Challenge6-WeatherDashboard\assets\images\dashboardex.png
+[!Screenshot of weather dashboard page](./assets/images/dashboardex.png)
