@@ -1,3 +1,13 @@
 *{
     box-sizing: border-box;
 }
+
+#future-weather {
+    font-weight: bold;
+    margin-top: 2px
+}
+
+.btn {
+    border: solid;
+    border-width: 1px;
+}
