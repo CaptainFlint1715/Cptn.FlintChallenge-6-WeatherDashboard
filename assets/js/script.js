@@ -1,6 +1,3 @@
-'http://api.openweathermap.org/data/2.5/weather?q=ATLANTA&appid=a6f604b70bbc96fe15f33a697d2d32cf'
-
-
 var city = ''
 var searchCity = $('#city-input')
 var searchBtn = $('#submit')
@@ -45,7 +42,7 @@ function find(c) {
 
 // makes call for 5-day forecast from weather api and renders info to forecast display
 function displayForecast(city) {
-    var forecastQ = 'http://api.openweathermap.org/data/2.5/forecast?q=' + city + '&cnt=5&units=imperial&appid=' + weatherAPI
+    var forecastQ = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&cnt=5&units=imperial&appid=' + weatherAPI
 
     fetch(forecastQ).then(function (response) {
         return response.json()
@@ -96,7 +93,7 @@ function displayForecast(city) {
 // calls weather api for the city entered into search and renders weather info for current day
 function displayCity(city) {
     searchCity.val('')
-    var queryUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + weatherAPI + '&humidity&units=imperial'
+    var queryUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + weatherAPI + '&humidity&units=imperial'
 
     fetch(queryUrl).then(function (response) {
         // prevents non-city search entries from being displayed in title
