@@ -23,4 +23,4 @@ Please refer to the LICENSE in the repo.
 
 ## Images
 
-[!Screenshot of weather dashboard page](./assets/images/dashboardex.png)
+<img src="./assets/images/dashboardex.png" alt="screenshot of weather dashboard page">
